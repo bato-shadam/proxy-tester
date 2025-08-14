@@ -10,20 +10,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-
-      - name: Install PyInstaller
-        run: pip install pyinstaller
-
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
       - name: Build exe
-        run: pyinstaller --onefile proxy_tester.py
-
+        run: pyinstaller --onefile proxy_hunter.py
       - name: Upload exe
         uses: actions/upload-artifact@v4
         with:
-          name: proxy_tester
-          path: dist/proxy_tester.exe
+          name: proxy_hunter
+          path: dist/proxy_hunter.exe
