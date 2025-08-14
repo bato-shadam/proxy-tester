@@ -1,0 +1,29 @@
+name: Build EXE
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install PyInstaller
+        run: pip install pyinstaller
+
+      - name: Build exe
+        run: pyinstaller --onefile proxy_tester.py
+
+      - name: Upload exe
+        uses: actions/upload-artifact@v3
+        with:
+          name: proxy_tester
+          path: dist/proxy_tester.exe
